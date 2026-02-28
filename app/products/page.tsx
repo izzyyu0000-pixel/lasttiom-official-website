@@ -8,6 +8,11 @@ import {urlForImage} from '@/lib/sanity/image'
 export const metadata: Metadata = {
   title: '商品列表',
   description: '瀏覽彌月金飾禮盒與可客製化款式。',
+  openGraph: {
+    title: '商品列表 | 輕奢彌月金飾',
+    description: '瀏覽彌月金飾禮盒與可客製化款式。',
+    type: 'website',
+  },
 }
 
 function formatPrice(price: number): string {

@@ -220,7 +220,7 @@ export default async function ProductDetailPage({params}: ProductPageProps) {
         </section>
 
         <section className="rounded-2xl border border-stone-200 bg-white p-5">
-          <p className="text-xs tracking-[0.18em] text-stone-500">carpe diem 品牌承諾</p>
+          <p className="text-xs tracking-[0.18em] text-stone-500">止時 品牌承諾</p>
           <p className="mt-2 text-sm leading-relaxed tracking-wide text-stone-700">
             止時相信，比黃金更珍貴的是你的心意。我們把吉祥寓意與鍍金工藝結合，讓彌月禮不只好看，也能成為被家庭長久珍藏的祝福。
           </p>

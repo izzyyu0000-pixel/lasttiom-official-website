@@ -6,9 +6,14 @@ import {getFeaturedPosts} from '@/lib/sanity/fetch'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: '輕奢彌月金飾 | 溫暖祝福的第一份禮',
+  title: '溫暖祝福的第一份禮',
   description:
     '專注母嬰送禮場景的輕奢金飾品牌，提供彌月禮盒、十二生肖與生辰花客製款式，兼具質感與心意。',
+  openGraph: {
+    title: '溫暖祝福的第一份禮 | 輕奢彌月金飾',
+    description: '專注母嬰送禮場景的輕奢金飾品牌，提供彌月禮盒、十二生肖與生辰花客製款式，兼具質感與心意。',
+    type: 'website',
+  },
 }
 
 export default async function HomePage() {

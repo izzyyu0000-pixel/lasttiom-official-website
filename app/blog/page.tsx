@@ -8,6 +8,11 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: '品牌專欄',
   description: '閱讀彌月送禮、母嬰祝福與金飾挑選內容。',
+  openGraph: {
+    title: '品牌專欄 | 輕奢彌月金飾',
+    description: '閱讀彌月送禮、母嬰祝福與金飾挑選內容。',
+    type: 'website',
+  },
 }
 
 export default async function BlogPage() {

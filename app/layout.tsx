@@ -1,13 +1,33 @@
 import './globals.css'
 import type {Metadata} from 'next'
 import Link from 'next/link'
+import {getSiteUrl} from '@/lib/site'
+
+const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: '輕奢彌月金飾',
     template: '%s | 輕奢彌月金飾',
   },
   description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: '輕奢彌月金飾',
+    description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+    url: siteUrl,
+    siteName: '輕奢彌月金飾',
+    locale: 'zh_TW',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '輕奢彌月金飾',
+    description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+  },
 }
 
 export default function RootLayout({

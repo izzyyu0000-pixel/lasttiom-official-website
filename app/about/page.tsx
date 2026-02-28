@@ -1,10 +1,14 @@
 import type {Metadata} from 'next'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: '品牌故事',
   description:
-    '止時 carpe diem 品牌故事：把老祖先的吉祥寓意，用現代工藝重新詮釋，為每個寶寶打造被珍藏的彌月心意。',
+    '止時品牌故事：把老祖先的吉祥寓意，用現代工藝重新詮釋，為每個寶寶打造被珍藏的彌月心意。',
+  openGraph: {
+    title: '品牌故事 | 輕奢彌月金飾',
+    description: '止時品牌故事：把老祖先的吉祥寓意，用現代工藝重新詮釋，為每個寶寶打造被珍藏的彌月心意。',
+    type: 'website',
+  },
 }
 
 const meaningItems = [
@@ -30,7 +34,7 @@ export default function AboutPage() {
       <article className="mx-auto w-full max-w-4xl space-y-10">
         <header className="space-y-4 text-center">
           <p className="inline-flex rounded-full border border-[var(--line)] bg-white px-4 py-1 text-xs tracking-[0.2em] text-[var(--muted)]">
-            carpe diem 品牌故事
+            止時 品牌故事
           </p>
           <h1 className="text-3xl leading-tight sm:text-5xl">
             止時，為寶寶出生那一刻，做一份會被珍藏的祝福。
@@ -86,12 +90,6 @@ export default function AboutPage() {
             希望它能帶給你，跟我們每位客戶一樣的感動。
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/products"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--accent)] px-6 text-sm font-semibold text-white"
-            >
-              查看彌月禮盒
-            </Link>
             <a
               href="https://shopee.tw/kiyone?categoryId=100632&entryPoint=ShopByPDP&itemId=20665457659"
               target="_blank"

@@ -153,6 +153,20 @@ const featuredProductsQuery = groq`
   }
 `
 
+const allProductsQuery = groq`
+  *[_type == "product" && defined(slug.current)] | order(_updatedAt desc){
+    _id,
+    title,
+    "slug": slug.current,
+    price,
+    "mainImage": images[0]{
+      ...,
+      alt
+    },
+    shopeeUrl
+  }
+`
+
 const featuredPostsQuery = groq`
   *[_type == "post" && defined(slug.current)] | order(_updatedAt desc)[0...2]{
     _id,
@@ -240,6 +254,11 @@ export async function getPostBySlug(slug: string): Promise<PostData | null> {
 
 export async function getFeaturedProducts(): Promise<ProductCardData[]> {
   const result = await safeFetch<ProductCardData[]>(featuredProductsQuery)
+  return Array.isArray(result) ? result : []
+}
+
+export async function getAllProducts(): Promise<ProductCardData[]> {
+  const result = await safeFetch<ProductCardData[]>(allProductsQuery)
   return Array.isArray(result) ? result : []
 }
 
