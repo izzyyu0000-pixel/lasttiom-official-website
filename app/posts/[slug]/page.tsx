@@ -119,8 +119,8 @@ export default async function PostDetailPage({params}: PostPageProps) {
         height: 630,
       },
     }),
-    // publishedAt 是 Sanity 的標準欄位；若你沒有這個欄位可移除這行
-    ...(post.publishedAt && {datePublished: post.publishedAt}),
+    // 目前文章 schema 沒有自訂 publishedAt，先以建立時間作為發布時間。
+    datePublished: post._createdAt,
     // _updatedAt 是 Sanity 每次儲存時自動更新的欄位，一定存在
     dateModified: post._updatedAt,
     inLanguage: 'zh-TW',

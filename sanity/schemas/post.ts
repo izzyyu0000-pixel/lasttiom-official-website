@@ -62,6 +62,36 @@ export const postSchema = defineType({
       validation: (rule) => rule.required().min(1).error('請填寫文章內容'),
     }),
     defineField({
+      name: 'faq',
+      title: 'FAQ 常見問題',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'question',
+              title: '問題',
+              type: 'string',
+              validation: (rule) => rule.required().error('請填寫 FAQ 問題'),
+            }),
+            defineField({
+              name: 'answer',
+              title: '答案',
+              type: 'text',
+              rows: 3,
+              validation: (rule) => rule.required().error('請填寫 FAQ 答案'),
+            }),
+          ],
+          preview: {
+            select: {title: 'question'},
+          },
+        }),
+      ],
+      // 文章頁可選填 FAQ，填寫後前台會輸出 FAQ Schema
+      validation: (rule) => rule.unique(),
+    }),
+    defineField({
       name: 'relatedProducts',
       title: '關聯推薦商品',
       type: 'array',

@@ -64,6 +64,11 @@ export interface ProductCardData {
   shopeeUrl: string | null
 }
 
+export interface PostFaqItem {
+  question: string
+  answer: string
+}
+
 export interface PostCardData {
   _id: string
   title: string
@@ -84,6 +89,7 @@ export interface PostData {
   seoTitle: string | null
   seoDescription: string | null
   body: PortableTextBlock[]
+  faq: PostFaqItem[]
   relatedProducts: RelatedProductData[]
 }
 
@@ -122,6 +128,13 @@ const postBySlugQuery = groq`
     seoTitle,
     seoDescription,
     body,
+    "faq": coalesce(
+      faq[]{
+        question,
+        answer
+      },
+      []
+    ),
     "relatedProducts": coalesce(
       relatedProducts[]->{
         _id,

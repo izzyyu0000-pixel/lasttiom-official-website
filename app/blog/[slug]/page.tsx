@@ -93,12 +93,36 @@ export async function generateMetadata({params}: PostPageProps): Promise<Metadat
 export default async function PostDetailPage({params}: PostPageProps) {
   const post = await getPostBySlug(params.slug)
   if (!post) notFound()
+  const faqItems = Array.isArray(post.faq)
+    ? post.faq.filter((item) => item.question?.trim() && item.answer?.trim())
+    : []
   const relatedProducts = Array.isArray(post.relatedProducts) ? post.relatedProducts : []
+  const faqSchema =
+    faqItems.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer,
+            },
+          })),
+        }
+      : null
 
   return (
     <div className="min-h-screen bg-warmwhite text-textmain antialiased">
       <main className="mx-auto w-full max-w-3xl px-5 py-10 pb-32 md:py-16 md:pb-20">
         <article>
+          {faqSchema ? (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{__html: JSON.stringify(faqSchema)}}
+            />
+          ) : null}
           <header className="mb-10 text-center">
             <h1 className="mb-6 text-3xl font-bold leading-tight text-milktea md:text-4xl">{post.title}</h1>
             {post.seoDescription ? <p className="mx-auto max-w-2xl text-sm text-textlight">{post.seoDescription}</p> : null}
@@ -119,6 +143,20 @@ export default async function PostDetailPage({params}: PostPageProps) {
           <section className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-5 md:p-8">
             <PortableText value={post.body} components={portableTextComponents} />
           </section>
+
+          {faqItems.length > 0 ? (
+            <section className="mt-12 space-y-4">
+              <h2 className="text-2xl">常見問題</h2>
+              <div className="space-y-3">
+                {faqItems.map((item) => (
+                  <article key={item.question} className="rounded-2xl border border-[var(--line)] bg-white p-5">
+                    <h3 className="text-lg font-semibold leading-relaxed text-textmain">{item.question}</h3>
+                    <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-textlight">{item.answer}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           {relatedProducts.length > 0 ? (
             <section className="mt-12 space-y-3">
