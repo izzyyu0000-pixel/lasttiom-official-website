@@ -166,15 +166,28 @@ export default function BusinessPage() {
               <li>專屬報價與合作條件</li>
             </ul>
           </div>
-          <p className="mt-6 text-sm text-white/70">採購洽詢窗口：請透過蝦皮聊聊與我們聯繫。</p>
-          <a
-            href={shopeeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--sand)]"
-          >
-            前往蝦皮洽詢合作
-          </a>
+          <p className="mt-6 text-sm text-white/70">
+            採購洽詢窗口：{' '}
+            <a href="mailto:izzyyu0000@gmail.com" className="font-medium text-white underline underline-offset-4">
+              izzyyu0000@gmail.com
+            </a>
+          </p>
+          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href="mailto:izzyyu0000@gmail.com"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--sand)]"
+            >
+              寄信洽詢合作
+            </a>
+            <a
+              href={shopeeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-7 text-sm font-semibold text-white transition hover:bg-white/10"
+            >
+              前往蝦皮聊聊
+            </a>
+          </div>
         </section>
       </article>
     </main>
