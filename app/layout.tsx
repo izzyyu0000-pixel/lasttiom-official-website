@@ -64,6 +64,12 @@ export default function RootLayout({
               >
                 品牌故事
               </Link>
+              <Link
+                href="/business"
+                className="shrink-0 rounded-full px-3 py-2 text-[var(--muted)] hover:bg-[var(--sand)] hover:text-[var(--ink)]"
+              >
+                企業合作
+              </Link>
             </nav>
           </div>
         </header>
