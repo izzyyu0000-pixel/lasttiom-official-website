@@ -2,9 +2,11 @@ import type {Metadata} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
+import {PortableText} from '@portabletext/react'
 
 import {getProductBySlug, type ProductData} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
+import {getSiteUrl} from '@/lib/site'
 
 interface ProductPageProps {
   params: {slug: string}
@@ -124,7 +126,7 @@ function ProductDescription({body}: {body: ProductData['body']}) {
       <h2 className="text-lg font-medium tracking-wide text-stone-900">商品介紹</h2>
       <div className="prose prose-stone max-w-none rounded-2xl bg-white p-5 text-sm leading-relaxed shadow-sm ring-1 ring-stone-100">
         {Array.isArray(body) && body.length > 0 ? (
-          <div data-portable-text />
+          <PortableText value={body} />
         ) : (
           <p className="m-0 text-stone-500">內容準備中</p>
         )}
@@ -168,12 +170,12 @@ export async function generateMetadata({params}: ProductPageProps): Promise<Meta
 
   if (!product) {
     return {
-      title: '商品不存在 | 輕奢彌月金飾',
+      title: '商品不存在',
       description: '您查看的商品目前不存在或已下架。',
     }
   }
 
-  const title = `${product.title} | 輕奢彌月金飾`
+  const title = product.title
   const description = `${product.title}，${formatPrice(product.price)}，可選客製化款式，立即查看商品細節。`
   const ogImage = product.images[0]?.asset
     ? urlForImage(product.images[0]).width(1200).height(630).url()
@@ -182,6 +184,7 @@ export async function generateMetadata({params}: ProductPageProps): Promise<Meta
   return {
     title,
     description,
+    alternates: {canonical: `/products/${product.slug}`},
     openGraph: {
       title,
       description,
@@ -205,8 +208,29 @@ export default async function ProductDetailPage({params}: ProductPageProps) {
     notFound()
   }
 
+  const siteUrl = getSiteUrl()
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    url: `${siteUrl}/products/${product.slug}`,
+    brand: {'@type': 'Brand', name: '止時 LAST·TIME'},
+    image: product.images
+      .filter((image) => image.asset)
+      .slice(0, 3)
+      .map((image) => urlForImage(image).width(1200).height(1200).url()),
+    offers: {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: 'TWD',
+      availability: 'https://schema.org/InStock',
+      url: product.shopeeUrl || `${siteUrl}/products/${product.slug}`,
+    },
+  }
+
   return (
     <main className="min-h-screen bg-stone-50 pb-28 text-stone-900">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(productSchema)}} />
       <article className="mx-auto w-full max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-8">
         <ProductImageCarousel product={product} />
 

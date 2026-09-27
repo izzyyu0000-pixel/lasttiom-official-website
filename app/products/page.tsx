@@ -6,11 +6,12 @@ import {getFeaturedProducts} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
 
 export const metadata: Metadata = {
-  title: '商品列表',
-  description: '瀏覽彌月金飾禮盒與可客製化款式。',
+  title: '彌月禮盒商品｜十二生肖・生辰花客製',
+  description: '止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，NT$790 起，適合彌月、收涎、週歲送禮。',
+  alternates: {canonical: '/products'},
   openGraph: {
-    title: '商品列表 | 輕奢彌月金飾',
-    description: '瀏覽彌月金飾禮盒與可客製化款式。',
+    title: '彌月禮盒商品｜十二生肖・生辰花客製｜止時',
+    description: '止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，NT$790 起。',
     type: 'website',
   },
 }
@@ -63,8 +64,28 @@ export default async function ProductsPage() {
             ))}
           </div>
         ) : (
-          <div className="mt-8 rounded-2xl border border-dashed border-[var(--line)] bg-white/70 p-8 text-center text-sm text-[var(--muted)]">
-            尚未取得商品資料，請先在 Sanity 新增商品。
+          <div className="mt-8 space-y-4">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                {name: '十二生肖客製款', text: '依寶寶生肖挑選專屬圖騰，寓意平安長大。'},
+                {name: '生辰花客製款', text: '以寶寶出生月份的誕生花為主題，溫柔有紀念意義。'},
+                {name: '彌月鍍金別針禮盒', text: '銅鍍真金別針搭配禮盒包裝，送禮體面、可長久珍藏。'},
+              ].map((item) => (
+                <article key={item.name} className="rounded-3xl border border-[var(--line)] bg-white p-5">
+                  <h2 className="text-base font-semibold">{item.name}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.text}</p>
+                  <p className="mt-3 text-lg font-semibold text-[var(--rose)]">NT$790</p>
+                </article>
+              ))}
+            </div>
+            <a
+              href="https://shopee.tw/kiyone"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[var(--accent)] px-6 text-sm font-semibold text-white sm:w-auto"
+            >
+              到蝦皮賣場看全部款式
+            </a>
           </div>
         )}
       </div>

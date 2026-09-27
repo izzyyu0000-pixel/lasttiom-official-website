@@ -6,12 +6,13 @@ import {getFeaturedPosts} from '@/lib/sanity/fetch'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: '溫暖祝福的第一份禮',
+  title: {absolute: '彌月禮盒推薦｜十二生肖・生辰花客製鍍金飾品｜止時'},
   description:
-    '專注母嬰送禮場景的輕奢金飾品牌，提供彌月禮盒、十二生肖與生辰花客製款式，兼具質感與心意。',
+    '找彌月禮、收涎禮、週歲禮？止時提供十二生肖與生辰花客製鍍金別針禮盒，NT$790 起，蝦皮 800+ 件售出、5.0 顆星好評，24 小時快速出貨。',
+  alternates: {canonical: '/'},
   openGraph: {
-    title: '溫暖祝福的第一份禮 | 輕奢彌月金飾',
-    description: '專注母嬰送禮場景的輕奢金飾品牌，提供彌月禮盒、十二生肖與生辰花客製款式，兼具質感與心意。',
+    title: '彌月禮盒推薦｜十二生肖・生辰花客製鍍金飾品｜止時',
+    description: '十二生肖與生辰花客製鍍金別針禮盒，NT$790 起，蝦皮 5.0 顆星好評。',
     type: 'website',
   },
 }
@@ -60,6 +61,31 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section aria-label="顧客口碑" className="px-5 pb-8 sm:px-8">
+        <div className="mx-auto grid w-full max-w-6xl grid-cols-3 gap-3 rounded-3xl border border-[var(--line)] bg-white/90 p-5 text-center sm:p-6">
+          <div>
+            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">5.0</p>
+            <p className="mt-1 text-xs text-[var(--muted)]">蝦皮顆星評價</p>
+          </div>
+          <div>
+            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">213</p>
+            <p className="mt-1 text-xs text-[var(--muted)]">則買家評價</p>
+          </div>
+          <div>
+            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">832</p>
+            <p className="mt-1 text-xs text-[var(--muted)]">件已售出</p>
+          </div>
+          <a
+            href="https://shopee.tw/kiyone"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-3 text-xs text-[var(--rose)] underline underline-offset-4"
+          >
+            到蝦皮看真實買家評價
+          </a>
+        </div>
+      </section>
+
       <section className="px-5 pb-8 sm:px-8">
         <div className="mx-auto w-full max-w-6xl rounded-3xl border border-[var(--line)] bg-white/90 p-6 sm:p-8">
           <p className="text-xs tracking-[0.18em] text-[var(--muted)]">BRAND STORY</p>
@@ -96,9 +122,9 @@ export default async function HomePage() {
                   <p className="mt-2 line-clamp-2 text-sm text-[var(--muted)]">
                     {post.seoDescription || '閱讀彌月送禮指南、寶寶祝福寓意與挑選建議。'}
                   </p>
-                  <p className="mt-3 text-xs text-[var(--muted)]">
-                    關聯商品：{relatedProducts.length > 0 ? relatedProducts[0].title : '尚未設定'}
-                  </p>
+                  {relatedProducts.length > 0 ? (
+                    <p className="mt-3 text-xs text-[var(--muted)]">關聯商品：{relatedProducts[0].title}</p>
+                  ) : null}
                   <Link
                     href={`/blog/${post.slug}`}
                     className="mt-4 inline-flex min-h-10 items-center rounded-full border border-[var(--line)] px-4 text-sm font-medium"

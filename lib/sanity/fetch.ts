@@ -71,6 +71,7 @@ export interface PostFaqItem {
 
 export interface PostCardData {
   _id: string
+  _updatedAt?: string
   title: string
   slug: string
   mainImage: SanityImage | null
@@ -211,6 +212,7 @@ const featuredPostsQuery = groq`
 const allPostsQuery = groq`
   *[_type == "post" && defined(slug.current)] | order(_updatedAt desc){
     _id,
+    _updatedAt,
     title,
     "slug": slug.current,
     mainImage{

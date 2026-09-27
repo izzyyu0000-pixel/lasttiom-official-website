@@ -6,10 +6,11 @@ import {getAllPosts} from '@/lib/sanity/fetch'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: '品牌專欄',
-  description: '閱讀彌月送禮、母嬰祝福與金飾挑選內容。',
+  title: '彌月・收涎・週歲送禮專欄',
+  description: '彌月禮怎麼送、收涎與抓周怎麼準備？止時整理新手爸媽與送禮親友最需要的育兒儀式與送禮指南。',
+  alternates: {canonical: '/blog'},
   openGraph: {
-    title: '品牌專欄 | 輕奢彌月金飾',
+    title: '彌月・收涎・週歲送禮專欄｜止時',
     description: '閱讀彌月送禮、母嬰祝福與金飾挑選內容。',
     type: 'website',
   },
@@ -35,9 +36,9 @@ export default async function BlogPage() {
                   <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
                     {post.seoDescription || '閱讀更多彌月送禮與育兒情境內容。'}
                   </p>
-                  <p className="mt-3 text-xs text-[var(--muted)]">
-                    關聯商品：{relatedProducts.length > 0 ? relatedProducts[0].title : '尚未設定'}
-                  </p>
+                  {relatedProducts.length > 0 ? (
+                    <p className="mt-3 text-xs text-[var(--muted)]">關聯商品：{relatedProducts[0].title}</p>
+                  ) : null}
                   <Link
                     href={`/blog/${post.slug}`}
                     className="mt-4 inline-flex min-h-10 items-center rounded-full border border-[var(--line)] px-4 text-sm font-medium"

@@ -1,33 +1,65 @@
 import './globals.css'
 import type {Metadata} from 'next'
 import Link from 'next/link'
+import Script from 'next/script'
 import {getSiteUrl} from '@/lib/site'
 
 const siteUrl = getSiteUrl()
 
+const siteName = '止時 LAST·TIME'
+const defaultTitle = '止時｜彌月禮盒・十二生肖與生辰花客製鍍金飾品'
+const defaultDescription =
+  '止時是專注彌月、收涎、週歲送禮的鍍金飾品品牌，提供十二生肖與生辰花客製款式，蝦皮累積 800+ 件銷售、5.0 顆星好評。'
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: '輕奢彌月金飾',
-    template: '%s | 輕奢彌月金飾',
+    default: defaultTitle,
+    template: '%s｜止時 彌月金飾',
   },
-  description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+  description: defaultDescription,
+  applicationName: siteName,
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: '輕奢彌月金飾',
-    description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+    title: defaultTitle,
+    description: defaultDescription,
     url: siteUrl,
-    siteName: '輕奢彌月金飾',
+    siteName,
     locale: 'zh_TW',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '輕奢彌月金飾',
-    description: '母嬰送禮情境的輕奢金飾官網，結合內容導購與商品展示。',
+    title: defaultTitle,
+    description: defaultDescription,
   },
+}
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID
+
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: siteName,
+      alternateName: ['止時', 'LAST TIME'],
+      url: siteUrl,
+      email: 'izzyyu0000@gmail.com',
+      sameAs: ['https://shopee.tw/kiyone'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      inLanguage: 'zh-TW',
+      publisher: {'@id': `${siteUrl}/#organization`},
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -38,6 +70,15 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(siteSchema)}} />
+        {gaId ? (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
+        ) : null}
         <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-white/90 backdrop-blur">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
             <Link href="/" className="shrink-0 text-sm font-semibold tracking-[0.12em] text-[var(--ink)]">
@@ -74,6 +115,26 @@ export default function RootLayout({
           </div>
         </header>
         {children}
+        <footer className="border-t border-[var(--line)] bg-white/80">
+          <div className="mx-auto grid w-full max-w-6xl gap-6 px-5 py-10 text-sm text-[var(--muted)] sm:grid-cols-3 sm:px-8">
+            <div>
+              <p className="font-semibold tracking-[0.12em] text-[var(--ink)]">止時 LAST·TIME</p>
+              <p className="mt-2 leading-relaxed">彌月、收涎、週歲的第一份金飾祝福。十二生肖與生辰花客製鍍金飾品。</p>
+            </div>
+            <nav aria-label="頁尾導覽" className="flex flex-col gap-2">
+              <Link href="/blog" className="hover:text-[var(--ink)]">育兒送禮專欄</Link>
+              <Link href="/about" className="hover:text-[var(--ink)]">品牌故事</Link>
+              <Link href="/business" className="hover:text-[var(--ink)]">診所・月子中心・企業合作</Link>
+            </nav>
+            <div className="flex flex-col gap-2">
+              <a href="https://shopee.tw/kiyone" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--ink)]">
+                蝦皮賣場：止時
+              </a>
+              <a href="mailto:izzyyu0000@gmail.com" className="hover:text-[var(--ink)]">合作洽詢：izzyyu0000@gmail.com</a>
+              <p className="mt-2 text-xs">© {new Date().getFullYear()} 止時 LAST·TIME</p>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   )

@@ -6,6 +6,7 @@ import {PortableText, type PortableTextComponents} from '@portabletext/react'
 
 import {getPostBySlug} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
+import {getSiteUrl} from '@/lib/site'
 
 interface PostPageProps {
   params: {slug: string}
@@ -97,6 +98,23 @@ export default async function PostDetailPage({params}: PostPageProps) {
     ? post.faq.filter((item) => item.question?.trim() && item.answer?.trim())
     : []
   const relatedProducts = Array.isArray(post.relatedProducts) ? post.relatedProducts : []
+  const siteUrl = getSiteUrl()
+  const canonicalUrl = `${siteUrl}/blog/${post.slug}`
+  const articleImage = post.mainImage?.asset ? urlForImage(post.mainImage).width(1200).height(630).url() : null
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.seoTitle || post.title,
+    description: post.seoDescription || '彌月送禮與母嬰選品內容。',
+    url: canonicalUrl,
+    ...(articleImage ? {image: [articleImage]} : {}),
+    datePublished: post._createdAt,
+    dateModified: post._updatedAt,
+    inLanguage: 'zh-TW',
+    author: {'@type': 'Person', name: '止時雙寶媽', url: `${siteUrl}/about`},
+    publisher: {'@type': 'Organization', name: '止時 LAST·TIME', url: siteUrl},
+    mainEntityOfPage: {'@type': 'WebPage', '@id': canonicalUrl},
+  }
   const faqSchema =
     faqItems.length > 0
       ? {
@@ -117,6 +135,7 @@ export default async function PostDetailPage({params}: PostPageProps) {
     <div className="min-h-screen bg-warmwhite text-textmain antialiased">
       <main className="mx-auto w-full max-w-3xl px-5 py-10 pb-32 md:py-16 md:pb-20">
         <article>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(articleSchema)}} />
           {faqSchema ? (
             <script
               type="application/ld+json"
