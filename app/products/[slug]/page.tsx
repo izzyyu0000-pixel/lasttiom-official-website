@@ -2,11 +2,14 @@ import type {Metadata} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
-import {PortableText} from '@portabletext/react'
+import {PortableText, toPlainText} from '@portabletext/react'
 
+import Breadcrumbs from '@/components/Breadcrumbs'
+import {toJsonLd} from '@/lib/json-ld'
+import {portableTextComponents} from '@/lib/portable-text'
 import {getProductBySlug, type ProductData} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
-import {getSiteUrl} from '@/lib/site'
+import {defaultOgImage, getSiteUrl} from '@/lib/site'
 
 interface ProductPageProps {
   params: {slug: string}
@@ -124,11 +127,11 @@ function ProductDescription({body}: {body: ProductData['body']}) {
   return (
     <section aria-label="商品介紹" className="space-y-3">
       <h2 className="text-lg font-medium tracking-wide text-stone-900">商品介紹</h2>
-      <div className="prose prose-stone max-w-none rounded-2xl bg-white p-5 text-sm leading-relaxed shadow-sm ring-1 ring-stone-100">
+      <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-stone-100">
         {Array.isArray(body) && body.length > 0 ? (
-          <PortableText value={body} />
+          <PortableText value={body} components={portableTextComponents} />
         ) : (
-          <p className="m-0 text-stone-500">內容準備中</p>
+          <p className="text-sm text-stone-500">內容準備中</p>
         )}
       </div>
     </section>
@@ -189,7 +192,7 @@ export async function generateMetadata({params}: ProductPageProps): Promise<Meta
       title,
       description,
       type: 'website',
-      images: ogImage ? [{url: ogImage}] : undefined,
+      images: ogImage ? [{url: ogImage}] : [defaultOgImage],
     },
     twitter: {
       card: 'summary_large_image',
@@ -209,11 +212,15 @@ export default async function ProductDetailPage({params}: ProductPageProps) {
   }
 
   const siteUrl = getSiteUrl()
+  const plainBody = Array.isArray(product.body) ? toPlainText(product.body).replace(/\s+/g, ' ').trim() : ''
+  const chars = Array.from(plainBody)
+  const schemaDescription = chars.length > 160 ? `${chars.slice(0, 159).join('')}…` : plainBody
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.title,
     url: `${siteUrl}/products/${product.slug}`,
+    ...(schemaDescription ? {description: schemaDescription} : {}),
     brand: {'@type': 'Brand', name: '止時 LAST·TIME'},
     image: product.images
       .filter((image) => image.asset)
@@ -230,8 +237,15 @@ export default async function ProductDetailPage({params}: ProductPageProps) {
 
   return (
     <main className="min-h-screen bg-stone-50 pb-28 text-stone-900">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(productSchema)}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: toJsonLd(productSchema)}} />
       <article className="mx-auto w-full max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+        <Breadcrumbs
+          items={[
+            {name: '首頁', href: '/'},
+            {name: '商品系列', href: '/products'},
+            {name: product.title, href: `/products/${product.slug}`},
+          ]}
+        />
         <ProductImageCarousel product={product} />
 
         <section aria-label="商品資訊" className="space-y-3">

@@ -2,58 +2,20 @@ import type {Metadata} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
-import {PortableText, type PortableTextComponents} from '@portabletext/react'
+import {PortableText} from '@portabletext/react'
 
+import Breadcrumbs from '@/components/Breadcrumbs'
+import {toJsonLd} from '@/lib/json-ld'
+import {portableTextComponents} from '@/lib/portable-text'
 import {getPostBySlug} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
-import {getSiteUrl} from '@/lib/site'
+import {defaultOgImage, getSiteUrl} from '@/lib/site'
 
 interface PostPageProps {
   params: {slug: string}
 }
 
 export const dynamic = 'force-dynamic'
-
-const portableTextComponents: PortableTextComponents = {
-  block: {
-    normal: ({children}) => <p className="mb-4 text-lg leading-relaxed text-textmain">{children}</p>,
-    h2: ({children}) => (
-      <h2 className="mb-6 mt-12 border-b-2 border-morandipink pb-2 text-2xl font-bold text-milktea">
-        {children}
-      </h2>
-    ),
-    h3: ({children}) => <h3 className="mb-2 mt-8 text-xl font-bold text-morandipink">{children}</h3>,
-    blockquote: ({children}) => (
-      <blockquote className="my-6 border-l-4 border-morandipink/70 bg-white px-4 py-3 text-textmain">
-        {children}
-      </blockquote>
-    ),
-  },
-  list: {
-    bullet: ({children}) => <ul className="mb-6 list-none space-y-4 pl-0 text-lg leading-relaxed">{children}</ul>,
-    number: ({children}) => <ol className="mb-6 list-decimal space-y-2 pl-6 text-lg leading-relaxed">{children}</ol>,
-  },
-  listItem: {
-    bullet: ({children}) => (
-      <li className="flex items-start">
-        <span className="mr-2 shrink-0 text-milktea">✿</span>
-        <div className="text-textmain">{children}</div>
-      </li>
-    ),
-    number: ({children}) => <li className="text-textmain">{children}</li>,
-  },
-  marks: {
-    strong: ({children}) => <strong className="font-semibold text-milktea">{children}</strong>,
-    link: ({children, value}) => {
-      const href = typeof value?.href === 'string' ? value.href : '#'
-      return (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="underline decoration-morandipink">
-          {children}
-        </a>
-      )
-    },
-  },
-}
 
 export async function generateMetadata({params}: PostPageProps): Promise<Metadata> {
   const post = await getPostBySlug(params.slug)
@@ -80,7 +42,7 @@ export async function generateMetadata({params}: PostPageProps): Promise<Metadat
       title,
       description,
       type: 'article',
-      images: ogImage ? [{url: ogImage}] : undefined,
+      images: ogImage ? [{url: ogImage}] : [defaultOgImage],
     },
     twitter: {
       card: 'summary_large_image',
@@ -112,7 +74,7 @@ export default async function PostDetailPage({params}: PostPageProps) {
     dateModified: post._updatedAt,
     inLanguage: 'zh-TW',
     author: {'@type': 'Person', name: '止時雙寶媽', url: `${siteUrl}/about`},
-    publisher: {'@type': 'Organization', name: '止時 LAST·TIME', url: siteUrl},
+    publisher: {'@id': `${siteUrl}/#organization`},
     mainEntityOfPage: {'@type': 'WebPage', '@id': canonicalUrl},
   }
   const faqSchema =
@@ -134,12 +96,20 @@ export default async function PostDetailPage({params}: PostPageProps) {
   return (
     <div className="min-h-screen bg-warmwhite text-textmain antialiased">
       <main className="mx-auto w-full max-w-3xl px-5 py-10 pb-32 md:py-16 md:pb-20">
+        <Breadcrumbs
+          className="mb-8"
+          items={[
+            {name: '首頁', href: '/'},
+            {name: '專欄', href: '/blog'},
+            {name: post.title, href: `/blog/${post.slug}`},
+          ]}
+        />
         <article>
-          <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(articleSchema)}} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{__html: toJsonLd(articleSchema)}} />
           {faqSchema ? (
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{__html: JSON.stringify(faqSchema)}}
+              dangerouslySetInnerHTML={{__html: toJsonLd(faqSchema)}}
             />
           ) : null}
           <header className="mb-10 text-center">

@@ -1,5 +1,8 @@
 import type {Metadata} from 'next'
 
+import {brandStats} from '@/lib/brand'
+import {defaultOgImage} from '@/lib/site'
+
 export const metadata: Metadata = {
   title: '企業合作｜彌月禮盒批量採購',
   description:
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
     title: '止時企業合作｜客製化彌月禮盒批量採購',
     description: '為診所、月子中心與企業提供具紀念意義的客製化母嬰送禮方案。',
     type: 'website',
+    images: [defaultOgImage],
   },
 }
 
@@ -63,7 +67,7 @@ export default function BusinessPage() {
                 止時是專注母嬰送禮情境的客製化金飾禮品品牌，主力商品為彌月／收涎／週歲禮盒。
               </p>
               <p>
-                商品已於蝦皮平台累積 832 件銷售、213 則評價、5.0 顆星（212 則五星），並已與生殖醫學機構建立長期批量採購合作。
+                商品已於蝦皮平台累積 {brandStats.soldCount} 件銷售、{brandStats.reviewCount} 則評價、{brandStats.rating} 顆星（{brandStats.fiveStarCount} 則五星），並已與生殖醫學機構建立長期批量採購合作。
               </p>
               <p>
                 適合作為診所、月子中心、企業贈禮的客製化紀念禮供應選項，可依採購方需求提供十二生肖、生辰花等客製化款式，並支援批量出貨。
@@ -74,15 +78,15 @@ export default function BusinessPage() {
             <p className="text-xs tracking-[0.18em] text-white/60">TRUSTED BY GIFT GIVERS</p>
             <dl className="mt-6 grid grid-cols-2 gap-5">
               <div>
-                <dt className="text-3xl font-semibold">832</dt>
+                <dt className="text-3xl font-semibold">{brandStats.soldCount}</dt>
                 <dd className="mt-1 text-sm text-white/70">累積銷售件數</dd>
               </div>
               <div>
-                <dt className="text-3xl font-semibold">5.0</dt>
+                <dt className="text-3xl font-semibold">{brandStats.rating}</dt>
                 <dd className="mt-1 text-sm text-white/70">商品評價星等</dd>
               </div>
               <div>
-                <dt className="text-3xl font-semibold">213</dt>
+                <dt className="text-3xl font-semibold">{brandStats.reviewCount}</dt>
                 <dd className="mt-1 text-sm text-white/70">商品評價數</dd>
               </div>
               <div>
@@ -135,7 +139,7 @@ export default function BusinessPage() {
           <h2 className="mt-3 text-2xl">合作信任佐證</h2>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {[
-              '該款式評價 5.0／5（213 則評價，212 則五星），已售出 832 件',
+              `該款式評價 ${brandStats.rating}／5（${brandStats.reviewCount} 則評價，${brandStats.fiveStarCount} 則五星），已售出 ${brandStats.soldCount} 件`,
               '蝦皮賣場營運滿 10 年，累積 1,403 位追蹤者',
               '賣場整體回覆率 78%，平均回覆速度為數小時內',
               '交易受蝦皮官方「蝦皮放心買・蝦皮安心退」機制保障',

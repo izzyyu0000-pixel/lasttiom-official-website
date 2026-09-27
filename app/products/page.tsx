@@ -2,17 +2,22 @@ import type {Metadata} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import {priceLabel} from '@/lib/brand'
 import {getFeaturedProducts} from '@/lib/sanity/fetch'
 import {urlForImage} from '@/lib/sanity/image'
+import {defaultOgImage} from '@/lib/site'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: '彌月禮盒商品｜十二生肖・生辰花客製',
-  description: '止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，NT$790 起，適合彌月、收涎、週歲送禮。',
+  description: `止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，${priceLabel} 起，適合彌月、收涎、週歲送禮。`,
   alternates: {canonical: '/products'},
   openGraph: {
     title: '彌月禮盒商品｜十二生肖・生辰花客製｜止時',
-    description: '止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，NT$790 起。',
+    description: `止時彌月鍍金別針禮盒，可選十二生肖或生辰花客製，${priceLabel} 起。`,
     type: 'website',
+    images: [defaultOgImage],
   },
 }
 
@@ -74,7 +79,7 @@ export default async function ProductsPage() {
                 <article key={item.name} className="rounded-3xl border border-[var(--line)] bg-white p-5">
                   <h2 className="text-base font-semibold">{item.name}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.text}</p>
-                  <p className="mt-3 text-lg font-semibold text-[var(--rose)]">NT$790</p>
+                  <p className="mt-3 text-lg font-semibold text-[var(--rose)]">{priceLabel}</p>
                 </article>
               ))}
             </div>

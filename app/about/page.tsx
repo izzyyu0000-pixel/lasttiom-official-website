@@ -1,13 +1,17 @@
 import type {Metadata} from 'next'
 
+import {defaultOgImage} from '@/lib/site'
+
 export const metadata: Metadata = {
   title: '品牌故事',
   description:
     '止時品牌故事：把老祖先的吉祥寓意，用現代工藝重新詮釋，為每個寶寶打造被珍藏的彌月心意。',
+  alternates: {canonical: '/about'},
   openGraph: {
-    title: '品牌故事｜止時 彌月金飾',
+    title: '品牌故事｜止時',
     description: '止時品牌故事：把老祖先的吉祥寓意，用現代工藝重新詮釋，為每個寶寶打造被珍藏的彌月心意。',
     type: 'website',
+    images: [defaultOgImage],
   },
 }
 

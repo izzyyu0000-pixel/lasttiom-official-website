@@ -1,18 +1,18 @@
 import type {Metadata} from 'next'
 import Link from 'next/link'
 
+import {brandStats, priceLabel} from '@/lib/brand'
 import {getFeaturedPosts} from '@/lib/sanity/fetch'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: {absolute: '彌月禮盒推薦｜十二生肖・生辰花客製鍍金飾品｜止時'},
-  description:
-    '找彌月禮、收涎禮、週歲禮？止時提供十二生肖與生辰花客製鍍金別針禮盒，NT$790 起，蝦皮 800+ 件售出、5.0 顆星好評，24 小時快速出貨。',
+  description: `找彌月禮、收涎禮、週歲禮？止時提供十二生肖與生辰花客製鍍金別針禮盒，${priceLabel} 起，蝦皮 ${brandStats.soldLabel} 件售出、${brandStats.rating} 顆星好評，24 小時快速出貨。`,
   alternates: {canonical: '/'},
   openGraph: {
     title: '彌月禮盒推薦｜十二生肖・生辰花客製鍍金飾品｜止時',
-    description: '十二生肖與生辰花客製鍍金別針禮盒，NT$790 起，蝦皮 5.0 顆星好評。',
+    description: `十二生肖與生辰花客製鍍金別針禮盒，${priceLabel} 起，蝦皮 ${brandStats.rating} 顆星好評。`,
     type: 'website',
   },
 }
@@ -62,24 +62,29 @@ export default async function HomePage() {
       </section>
 
       <section aria-label="顧客口碑" className="px-5 pb-8 sm:px-8">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-3 gap-3 rounded-3xl border border-[var(--line)] bg-white/90 p-5 text-center sm:p-6">
-          <div>
-            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">5.0</p>
-            <p className="mt-1 text-xs text-[var(--muted)]">蝦皮顆星評價</p>
-          </div>
-          <div>
-            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">213</p>
-            <p className="mt-1 text-xs text-[var(--muted)]">則買家評價</p>
-          </div>
-          <div>
-            <p className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">832</p>
-            <p className="mt-1 text-xs text-[var(--muted)]">件已售出</p>
-          </div>
+        <div className="mx-auto w-full max-w-6xl rounded-3xl border border-[var(--line)] bg-white/90 p-5 text-center sm:p-6">
+          <dl className="grid grid-cols-3 gap-3">
+            <div className="flex flex-col-reverse">
+              <dt className="mt-1 text-xs text-[var(--muted)]">蝦皮顆星評價</dt>
+              <dd className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">
+                <span aria-hidden="true">{brandStats.rating}</span>
+                <span className="sr-only">蝦皮評價 {brandStats.rating} 顆星（滿分 5 顆）</span>
+              </dd>
+            </div>
+            <div className="flex flex-col-reverse">
+              <dt className="mt-1 text-xs text-[var(--muted)]">則買家評價</dt>
+              <dd className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">{brandStats.reviewCount}</dd>
+            </div>
+            <div className="flex flex-col-reverse">
+              <dt className="mt-1 text-xs text-[var(--muted)]">件已售出</dt>
+              <dd className="text-2xl font-semibold text-[var(--ink)] sm:text-3xl">{brandStats.soldCount}</dd>
+            </div>
+          </dl>
           <a
             href="https://shopee.tw/kiyone"
             target="_blank"
             rel="noopener noreferrer"
-            className="col-span-3 text-xs text-[var(--rose)] underline underline-offset-4"
+            className="mt-3 inline-flex min-h-6 items-center text-xs text-[#a35843] underline underline-offset-4"
           >
             到蝦皮看真實買家評價
           </a>

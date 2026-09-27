@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import Link from 'next/link'
 
 import {getAllPosts} from '@/lib/sanity/fetch'
+import {defaultOgImage} from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     title: '彌月・收涎・週歲送禮專欄｜止時',
     description: '閱讀彌月送禮、母嬰祝福與金飾挑選內容。',
     type: 'website',
+    images: [defaultOgImage],
   },
 }
 
