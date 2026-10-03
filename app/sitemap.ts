@@ -41,6 +41,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${siteUrl}/products/prosperity-gold-pin`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
   ]
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
