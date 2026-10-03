@@ -5,4 +5,4 @@ export function getSiteUrl(): string {
 }
 
 // 預設分享圖（app/opengraph-image.tsx 產生）。頁面自訂 openGraph 時不會繼承，要自己帶上
-export const defaultOgImage = {url: '/opengraph-image', width: 1200, height: 630, alt: '止時 LAST·TIME'}
+export const defaultOgImage = {url: '/opengraph-image', width: 1200, height: 630, alt: '止時 STILL·TIME'}

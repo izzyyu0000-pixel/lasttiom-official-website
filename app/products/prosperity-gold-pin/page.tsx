@@ -217,7 +217,7 @@ export default function ProsperityGoldPinPage() {
     url: pageUrl,
     description:
       '彌月、收涎、週歲用的真空鍍真金別針禮盒，下排為雙鈴鐺、金縷衣、小金帽、金湯匙，上排綴飾可換十二生肖或十二月生辰花。',
-    brand: {'@type': 'Brand', name: '止時 LAST·TIME'},
+    brand: {'@type': 'Brand', name: '止時 STILL·TIME'},
     ...(schemaImages.length > 0 ? {image: schemaImages} : {}),
     offers: {
       '@type': 'Offer',

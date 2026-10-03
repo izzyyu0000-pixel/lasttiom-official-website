@@ -221,7 +221,7 @@ export default async function ProductDetailPage({params}: ProductPageProps) {
     name: product.title,
     url: `${siteUrl}/products/${product.slug}`,
     ...(schemaDescription ? {description: schemaDescription} : {}),
-    brand: {'@type': 'Brand', name: '止時 LAST·TIME'},
+    brand: {'@type': 'Brand', name: '止時 STILL·TIME'},
     image: product.images
       .filter((image) => image.asset)
       .slice(0, 3)

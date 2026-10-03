@@ -8,7 +8,7 @@ import {getSiteUrl} from '@/lib/site'
 
 const siteUrl = getSiteUrl()
 
-const siteName = '止時 LAST·TIME'
+const siteName = '止時 STILL·TIME'
 const defaultTitle = '止時｜彌月禮盒・十二生肖與生辰花客製鍍金飾品'
 const defaultDescription =
   `止時是專注彌月、收涎、週歲送禮的鍍金飾品品牌，提供十二生肖與生辰花客製款式，蝦皮累積 ${brandStats.soldLabel} 件銷售、${brandStats.rating} 顆星好評。`
@@ -45,7 +45,7 @@ const siteSchema = {
       '@type': 'Organization',
       '@id': `${siteUrl}/#organization`,
       name: siteName,
-      alternateName: ['止時', 'LAST TIME'],
+      alternateName: ['止時', 'STILL TIME', 'Still Time'],
       url: siteUrl,
       email: 'izzyyu0000@gmail.com',
       sameAs: ['https://shopee.tw/kiyone'],
@@ -117,7 +117,7 @@ export default function RootLayout({
         <footer className="border-t border-[var(--line)] bg-white/80">
           <div className="mx-auto grid w-full max-w-6xl gap-6 px-5 py-10 text-sm text-[var(--muted)] sm:grid-cols-3 sm:px-8">
             <div>
-              <p className="font-semibold tracking-[0.12em] text-[var(--ink)]">止時 LAST·TIME</p>
+              <p className="font-semibold tracking-[0.12em] text-[var(--ink)]">止時 STILL·TIME</p>
               <p className="mt-2 leading-relaxed">彌月、收涎、週歲的第一份金飾祝福。十二生肖與生辰花客製鍍金飾品。</p>
             </div>
             <nav aria-label="頁尾導覽" className="flex flex-col gap-1">
@@ -130,7 +130,7 @@ export default function RootLayout({
                 蝦皮賣場：止時
               </a>
               <a href="mailto:izzyyu0000@gmail.com" className="inline-flex min-h-8 items-center self-start break-all hover:text-[var(--ink)]">合作洽詢：izzyyu0000@gmail.com</a>
-              <p className="mt-2 text-xs">© {new Date().getFullYear()} 止時 LAST·TIME</p>
+              <p className="mt-2 text-xs">© {new Date().getFullYear()} 止時 STILL·TIME</p>
             </div>
           </div>
         </footer>
